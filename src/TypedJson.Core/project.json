@@ -1,0 +1,27 @@
+{
+  "name": "fsharp-typed-json",
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable",
+    "emitEntryPoint": false,
+    "compilerName": "fsc",
+    "compile": {
+      "includeFiles": ["to_json.fsi", "to_json.fs"]
+    }
+  },
+  "tools": {
+    "dotnet-compile-fsc": "1.0.0-preview2-*"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.1"
+        },
+        "Microsoft.FSharp.Core.netcore": "1.0.0-alpha-160629"
+      }
+    }
+  }
+}
+
