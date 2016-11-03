@@ -34,6 +34,8 @@ module To_json =
   work by extracting (or converting) the input value (of type 'a) into
   one or more output values which we already know can be converted. This
   way we can convert recursively into an arbitrary depth.
+
+  In F# terminology, these functions encode record types.
   *)
 
   val object1 : ('a -> key_value<'b1>) * t<'b1> -> t<'a>
@@ -92,6 +94,51 @@ module To_json =
     ('a -> key_value<'b7>) * t<'b7> ->
     ('a -> key_value<'b8>) * t<'b8> ->
     t<'a>
+
+  (* Instances to encode tuples as JSON heterogeneous arrays. *)
+
+  val tuple2 : t<'a1> -> t<'a2> -> t<'a1 * 'a2>
+  val tuple3 : t<'a1> -> t<'a2> -> t<'a3> -> t<'a1 * 'a2 * 'a3>
+  val tuple4 :
+    t<'a1> -> t<'a2> -> t<'a3> -> t<'a4> -> t<'a1 * 'a2 * 'a3 * 'a4>
+
+  val tuple5 :
+    t<'a1> ->
+    t<'a2> ->
+    t<'a3> ->
+    t<'a4> ->
+    t<'a5> ->
+    t<'a1 * 'a2 * 'a3 * 'a4 * 'a5>
+
+  val tuple6 :
+    t<'a1> ->
+    t<'a2> ->
+    t<'a3> ->
+    t<'a4> ->
+    t<'a5> ->
+    t<'a6> ->
+    t<'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6>
+
+  val tuple7 :
+    t<'a1> ->
+    t<'a2> ->
+    t<'a3> ->
+    t<'a4> ->
+    t<'a5> ->
+    t<'a6> ->
+    t<'a7> ->
+    t<'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6 * 'a7>
+
+  val tuple8 :
+    t<'a1> ->
+    t<'a2> ->
+    t<'a3> ->
+    t<'a4> ->
+    t<'a5> ->
+    t<'a6> ->
+    t<'a7> ->
+    t<'a8> ->
+    t<'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6 * 'a7 * 'a8>
 
   (** Operations meant to be imported directly into client code. *)
   module Ops =

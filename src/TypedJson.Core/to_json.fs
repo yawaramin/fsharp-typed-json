@@ -8,7 +8,8 @@ module To_json =
   type key_value<'a> = KeyValuePair<string, 'a>
 
   let commalist = String.concat ","
-  let enbrace s = "{" + s + "}"
+  let enbrace string = "{" + string + "}"
+  let enbracket string = "[" + string + "]"
 
   let int = { apply = sprintf "%d" }
   let string = { apply = sprintf "\"%s\"" }
@@ -19,7 +20,7 @@ module To_json =
   let option t = { apply = Option.fold (fun _ -> t.apply) "null" }
   let array t =
     { apply = fun a ->
-        "[" + (a |> Array.map t.apply |> commalist) + "]" }
+        a |> Array.map t.apply |> commalist |> enbracket }
 
   (**
   Returns a To_json instance that can convert a single key-value pair
@@ -107,7 +108,63 @@ module To_json =
            a |> f6 |> (key_value t6).apply
            a |> f7 |> (key_value t7).apply
            a |> f8 |> (key_value t8).apply |]
-          |> commalist |> enbrace }
+          |> commalist |> enbracket }
+
+  let tuple2 t1 t2 =
+    { apply = fun (a1, a2) ->
+        [| t1.apply a1; t2.apply a2 |] |> commalist |> enbracket }
+
+  let tuple3 t1 t2 t3 =
+    { apply = fun (a1, a2, a3) ->
+        [| t1.apply a1; t2.apply a2; t3.apply a3 |]
+          |> commalist |> enbracket }
+
+  let tuple4 t1 t2 t3 t4 =
+    { apply = fun (a1, a2, a3, a4) ->
+        [| t1.apply a1; t2.apply a2; t3.apply a3; t4.apply a4 |]
+          |> commalist |> enbracket }
+
+  let tuple5 t1 t2 t3 t4 t5 =
+    { apply = fun (a1, a2, a3, a4, a5) ->
+        [| t1.apply a1
+           t2.apply a2
+           t3.apply a3
+           t4.apply a4
+           t5.apply a5 |]
+          |> commalist |> enbracket }
+
+  let tuple6 t1 t2 t3 t4 t5 t6 =
+    { apply = fun (a1, a2, a3, a4, a5, a6) ->
+        [| t1.apply a1
+           t2.apply a2
+           t3.apply a3
+           t4.apply a4
+           t5.apply a5
+           t6.apply a6 |]
+          |> commalist |> enbracket }
+
+  let tuple7 t1 t2 t3 t4 t5 t6 t7 =
+    { apply = fun (a1, a2, a3, a4, a5, a6, a7) ->
+        [| t1.apply a1
+           t2.apply a2
+           t3.apply a3
+           t4.apply a4
+           t5.apply a5
+           t6.apply a6
+           t7.apply a7 |]
+          |> commalist |> enbracket }
+
+  let tuple8 t1 t2 t3 t4 t5 t6 t7 t8 =
+    { apply = fun (a1, a2, a3, a4, a5, a6, a7, a8) ->
+        [| t1.apply a1
+           t2.apply a2
+           t3.apply a3
+           t4.apply a4
+           t5.apply a5
+           t6.apply a6
+           t7.apply a7
+           t8.apply a8 |]
+          |> commalist |> enbracket }
 
   module Ops =
     let key (name : string) value = KeyValuePair(name, value)

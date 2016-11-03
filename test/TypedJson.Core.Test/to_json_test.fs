@@ -51,3 +51,112 @@ module To_json_test =
     let json = """{"name":"bob","age":31}"""
 
     Assert.Equal(json, to_json Person.to_json person)
+
+  [<Fact>]
+  let tuple2 () =
+    let person = ("bob", None)
+    let json = """["bob",null]"""
+
+    Assert.Equal(
+      json,
+      to_json
+        (To_json.tuple2 To_json.string <| To_json.option To_json.int)
+        person)
+
+  [<Fact>]
+  let tuple3 () =
+    let tuple = (1, true, "false")
+    let json = """[1,true,"false"]"""
+
+    Assert.Equal(
+      json,
+      to_json
+        (To_json.tuple3 To_json.int To_json.bool To_json.string)
+        tuple)
+
+  [<Fact>]
+  let tuple4 () =
+    let tuple = (1, true, "false", 5.55)
+    let json = """[1,true,"false",5.55]"""
+
+    Assert.Equal(
+      json,
+      to_json
+        (To_json.tuple4
+          To_json.int To_json.bool To_json.string To_json.float)
+
+        tuple)
+
+  [<Fact>]
+  let tuple5 () =
+    let tuple = (1, true, "false", 5.55, 'c')
+    let json = """[1,true,"false",5.55,"c"]"""
+
+    Assert.Equal(
+      json,
+      to_json
+        (To_json.tuple5
+          To_json.int
+          To_json.bool
+          To_json.string
+          To_json.float
+          To_json.char)
+
+        tuple)
+
+  [<Fact>]
+  let tuple6 () =
+    let tuple = (1, true, "false", 5.55, 'c', [|1|])
+    let json = """[1,true,"false",5.55,"c",[1]]"""
+
+    Assert.Equal(
+      json,
+      to_json
+        (To_json.tuple6
+          To_json.int
+          To_json.bool
+          To_json.string
+          To_json.float
+          To_json.char
+          (To_json.array To_json.int))
+
+        tuple)
+
+  [<Fact>]
+  let tuple7 () =
+    let tuple = (1, true, "false", 5.55, 'c', [|1|], 3.14159)
+    let json = """[1,true,"false",5.55,"c",[1],3.14159]"""
+
+    Assert.Equal(
+      json,
+      to_json
+        (To_json.tuple7
+          To_json.int
+          To_json.bool
+          To_json.string
+          To_json.float
+          To_json.char
+          (To_json.array To_json.int)
+          To_json.double)
+
+        tuple)
+
+  [<Fact>]
+  let tuple8 () =
+    let tuple = (1, true, "false", 5.55, 'c', [|1|], 3.14159, (1, true))
+    let json = """[1,true,"false",5.55,"c",[1],3.14159,[1,true]]"""
+
+    Assert.Equal(
+      json,
+      to_json
+        (To_json.tuple8
+          To_json.int
+          To_json.bool
+          To_json.string
+          To_json.float
+          To_json.char
+          (To_json.array To_json.int)
+          To_json.double
+          (To_json.tuple2 To_json.int To_json.bool))
+
+        tuple)
