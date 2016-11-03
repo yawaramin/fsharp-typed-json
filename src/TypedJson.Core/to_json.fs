@@ -108,7 +108,7 @@ module To_json =
            a |> f6 |> (key_value t6).apply
            a |> f7 |> (key_value t7).apply
            a |> f8 |> (key_value t8).apply |]
-          |> commalist |> enbracket }
+          |> commalist |> enbrace }
 
   let tuple2 t1 t2 =
     { apply = fun (a1, a2) ->
