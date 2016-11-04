@@ -15,24 +15,22 @@ module To_json_test =
     let t8 = (1, true, "false", 5.55, 'c', [|1|], 3.14159, (1, true))
 
     [<Fact>]
-    let int () =
-      Assert.Equal("1", to_json To_json.int 1)
+    let unit () = Assert.Equal("{}", to_json To_json.unit ())
 
     [<Fact>]
-    let string () =
-      Assert.Equal("\"1\"", to_json To_json.string "1")
+    let int () = Assert.Equal("1", to_json To_json.int 1)
 
     [<Fact>]
-    let float () =
-      Assert.Equal("1.0", to_json To_json.float 1.0)
+    let string () = Assert.Equal("\"1\"", to_json To_json.string "1")
 
     [<Fact>]
-    let double () =
-      Assert.Equal("1.0", to_json To_json.double 1.0)
+    let float () = Assert.Equal("1.0", to_json To_json.float 1.0)
 
     [<Fact>]
-    let char () =
-      Assert.Equal("\"1\"", to_json To_json.char '1')
+    let double () = Assert.Equal("1.0", to_json To_json.double 1.0)
+
+    [<Fact>]
+    let char () = Assert.Equal("\"1\"", to_json To_json.char '1')
 
     [<Fact>]
     let bool () =
@@ -268,3 +266,13 @@ module To_json_test =
             (To_json.tuple2 To_json.int To_json.bool))
 
           t8)
+
+    [<Fact>]
+    let sum2 () =
+      let json = """{"Some":1}"""
+      let to_json_t =
+        To_json.sum2
+          (key "Some" << (fun (Some int) -> int), To_json.int)
+          (key "None" << (fun None -> ()), To_json.unit)
+
+      Assert.Equal(json, to_json to_json_t <| Some 1)

@@ -1,20 +1,25 @@
 namespace TypedJson.Core
 
 open System.Collections.Generic
+open Try.Ops
 
 [<RequireQualifiedAccess>]
 module To_json =
-  type t<'a> = { apply : 'a -> string }
-  type key_value<'a> = KeyValuePair<string, 'a>
+  type 'a t = { apply : 'a -> string }
+  type 'a key_value = (string, 'a) KeyValuePair
 
   let commalist = String.concat ","
-  let enbrace string = "{" + string + "}"
-  let enbracket string = "[" + string + "]"
+  let enbrace string = "{" ^ string ^ "}"
+  let enbracket string = "[" ^ string ^ "]"
+  let get_key (key_value:'a key_value) = key_value.Key
+  let get_value (key_value:'a key_value) = key_value.Value
+  let fail_t () = failwith "Cannot use encoder."
 
+  let unit = { apply = fun () -> "{}" }
   let int = { apply = sprintf "%d" }
   let string = { apply = sprintf "\"%s\"" }
-  let float : t<float> = { apply = sprintf "%A" }
-  let double : t<double> = { apply = sprintf "%A" }
+  let float : float t = { apply = sprintf "%A" }
+  let double : double t = { apply = sprintf "%A" }
   let char = { apply = sprintf "\"%c\"" }
   let bool = { apply = sprintf "%b" }
   let option t = { apply = Option.fold (fun _ -> t.apply) "null" }
@@ -31,9 +36,9 @@ module To_json =
   @param t a JSON converter instance for the value in the key-value
   pair.
   *)
-  let key_value t : t<key_value<'a>> =
+  let key_value t : 'a key_value t =
     { apply = fun a ->
-        (string.apply a.Key) + ":" + (t.apply a.Value) }
+        (string.apply a.Key) ^ ":" ^ (t.apply a.Value) }
 
   let object1 (f1, t1) =
     { apply = enbrace << (key_value t1).apply << f1 }
@@ -165,6 +170,90 @@ module To_json =
            t7.apply a7
            t8.apply a8 |]
           |> commalist |> enbracket }
+
+  let try_case (f, t) a =
+    (fun () -> f a) |> try' |> Try.map (fun _ -> object1 (f, t))
+
+  let sum2 ft1 ft2 =
+    { apply = fun a ->
+        let t =
+          [| try_case ft1 a; try_case ft2 a |]
+            |> Try.sequence |> Try.get_or_else fail_t
+
+        t.apply a }
+
+  let sum3 ft1 ft2 ft3 =
+    { apply = fun a ->
+        let t =
+          [| try_case ft1 a; try_case ft2 a; try_case ft3 a |]
+            |> Try.sequence |> Try.get_or_else fail_t
+
+        t.apply a }
+
+  let sum4 ft1 ft2 ft3 ft4 =
+    { apply = fun a ->
+        let t =
+          [| try_case ft1 a
+             try_case ft2 a
+             try_case ft3 a
+             try_case ft4 a |]
+            |> Try.sequence |> Try.get_or_else fail_t
+
+        t.apply a }
+
+  let sum5 ft1 ft2 ft3 ft4 ft5 =
+    { apply = fun a ->
+        let t =
+          [| try_case ft1 a
+             try_case ft2 a
+             try_case ft3 a
+             try_case ft4 a
+             try_case ft5 a |]
+            |> Try.sequence |> Try.get_or_else fail_t
+
+        t.apply a }
+
+  let sum6 ft1 ft2 ft3 ft4 ft5 ft6 =
+    { apply = fun a ->
+        let t =
+          [| try_case ft1 a
+             try_case ft2 a
+             try_case ft3 a
+             try_case ft4 a
+             try_case ft5 a
+             try_case ft6 a |]
+            |> Try.sequence |> Try.get_or_else fail_t
+
+        t.apply a }
+
+  let sum7 ft1 ft2 ft3 ft4 ft5 ft6 ft7 =
+    { apply = fun a ->
+        let t =
+          [| try_case ft1 a
+             try_case ft2 a
+             try_case ft3 a
+             try_case ft4 a
+             try_case ft5 a
+             try_case ft6 a
+             try_case ft7 a |]
+            |> Try.sequence |> Try.get_or_else fail_t
+
+        t.apply a }
+
+  let sum8 ft1 ft2 ft3 ft4 ft5 ft6 ft7 ft8 =
+    { apply = fun a ->
+        let t =
+          [| try_case ft1 a
+             try_case ft2 a
+             try_case ft3 a
+             try_case ft4 a
+             try_case ft5 a
+             try_case ft6 a
+             try_case ft7 a
+             try_case ft8 a |]
+            |> Try.sequence |> Try.get_or_else fail_t
+
+        t.apply a }
 
   module Ops =
     let key (name : string) value = KeyValuePair(name, value)

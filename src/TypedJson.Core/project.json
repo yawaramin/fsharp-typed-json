@@ -5,8 +5,9 @@
     "debugType": "portable",
     "emitEntryPoint": false,
     "compilerName": "fsc",
+    "additionalArguments": ["--nowarn:62"],
     "compile": {
-      "includeFiles": ["to_json.fsi", "to_json.fs"]
+      "includeFiles": ["try.fsi", "try.fs", "to_json.fsi", "to_json.fs"]
     }
   },
   "tools": {
@@ -24,4 +25,3 @@
     }
   }
 }
-

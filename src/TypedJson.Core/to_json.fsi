@@ -3,7 +3,7 @@ namespace TypedJson.Core
 open System.Collections.Generic
 
 (**
-The To_json.t<'a> typeclass, instances for primitive types, and instance
+The 'a To_json.t typeclass, instances for primitive types, and instance
 builders for arbitrary (product) data types.
 *)
 module To_json =
@@ -14,19 +14,20 @@ module To_json =
   typeclass instances of the various types are proofs that those types
   can be converted into JSON strings.
   *)
-  type t<'a>
-  type key_value<'a> = KeyValuePair<string, 'a>
+  type 'a t
+  type 'a key_value = (string, 'a) KeyValuePair
 
   (* JSON converter instances for primitive types. *)
 
-  val int : t<int>
-  val string : t<string>
-  val float : t<float>
-  val double : t<double>
-  val char : t<char>
-  val bool : t<bool>
-  val option : t<'a> -> t<option<'a>>
-  val array : t<'a> -> t<array<'a>>
+  val unit : unit t
+  val int : int t
+  val string : string t
+  val float : float t
+  val double : double t
+  val char : char t
+  val bool : bool t
+  val option : 'a t -> 'a option t
+  val array : 'a t -> 'a array t
 
   (*
   The following are used to create JSON converter instances that
@@ -38,107 +39,171 @@ module To_json =
   In F# terminology, these functions encode record types.
   *)
 
-  val object1 : ('a -> key_value<'b1>) * t<'b1> -> t<'a>
+  val object1 : ('a -> 'b1 key_value) * 'b1 t -> 'a t
   val object2 :
-    ('a -> key_value<'b1>) * t<'b1> ->
-    ('a -> key_value<'b2>) * t<'b2> ->
-    t<'a>
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    'a t
 
   val object3 :
-    ('a -> key_value<'b1>) * t<'b1> ->
-    ('a -> key_value<'b2>) * t<'b2> ->
-    ('a -> key_value<'b3>) * t<'b3> ->
-    t<'a>
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    'a t
 
   val object4 :
-    ('a -> key_value<'b1>) * t<'b1> ->
-    ('a -> key_value<'b2>) * t<'b2> ->
-    ('a -> key_value<'b3>) * t<'b3> ->
-    ('a -> key_value<'b4>) * t<'b4> ->
-    t<'a>
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    'a t
 
   val object5 :
-    ('a -> key_value<'b1>) * t<'b1> ->
-    ('a -> key_value<'b2>) * t<'b2> ->
-    ('a -> key_value<'b3>) * t<'b3> ->
-    ('a -> key_value<'b4>) * t<'b4> ->
-    ('a -> key_value<'b5>) * t<'b5> ->
-    t<'a>
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b5 key_value) * 'b5 t ->
+    'a t
 
   val object6 :
-    ('a -> key_value<'b1>) * t<'b1> ->
-    ('a -> key_value<'b2>) * t<'b2> ->
-    ('a -> key_value<'b3>) * t<'b3> ->
-    ('a -> key_value<'b4>) * t<'b4> ->
-    ('a -> key_value<'b5>) * t<'b5> ->
-    ('a -> key_value<'b6>) * t<'b6> ->
-    t<'a>
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b5 key_value) * 'b5 t ->
+    ('a -> 'b6 key_value) * 'b6 t ->
+    'a t
 
   val object7 :
-    ('a -> key_value<'b1>) * t<'b1> ->
-    ('a -> key_value<'b2>) * t<'b2> ->
-    ('a -> key_value<'b3>) * t<'b3> ->
-    ('a -> key_value<'b4>) * t<'b4> ->
-    ('a -> key_value<'b5>) * t<'b5> ->
-    ('a -> key_value<'b6>) * t<'b6> ->
-    ('a -> key_value<'b7>) * t<'b7> ->
-    t<'a>
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b5 key_value) * 'b5 t ->
+    ('a -> 'b6 key_value) * 'b6 t ->
+    ('a -> 'b7 key_value) * 'b7 t ->
+    'a t
 
   val object8 :
-    ('a -> key_value<'b1>) * t<'b1> ->
-    ('a -> key_value<'b2>) * t<'b2> ->
-    ('a -> key_value<'b3>) * t<'b3> ->
-    ('a -> key_value<'b4>) * t<'b4> ->
-    ('a -> key_value<'b5>) * t<'b5> ->
-    ('a -> key_value<'b6>) * t<'b6> ->
-    ('a -> key_value<'b7>) * t<'b7> ->
-    ('a -> key_value<'b8>) * t<'b8> ->
-    t<'a>
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b5 key_value) * 'b5 t ->
+    ('a -> 'b6 key_value) * 'b6 t ->
+    ('a -> 'b7 key_value) * 'b7 t ->
+    ('a -> 'b8 key_value) * 'b8 t ->
+    'a t
 
   (* Instances to encode tuples as JSON heterogeneous arrays. *)
 
-  val tuple2 : t<'a1> -> t<'a2> -> t<'a1 * 'a2>
-  val tuple3 : t<'a1> -> t<'a2> -> t<'a3> -> t<'a1 * 'a2 * 'a3>
+  val tuple2 : 'a1 t -> 'a2 t -> ('a1 * 'a2) t
+  val tuple3 : 'a1 t -> 'a2 t -> 'a3 t -> ('a1 * 'a2 * 'a3) t
   val tuple4 :
-    t<'a1> -> t<'a2> -> t<'a3> -> t<'a4> -> t<'a1 * 'a2 * 'a3 * 'a4>
+    'a1 t -> 'a2 t -> 'a3 t -> 'a4 t -> ('a1 * 'a2 * 'a3 * 'a4) t
 
   val tuple5 :
-    t<'a1> ->
-    t<'a2> ->
-    t<'a3> ->
-    t<'a4> ->
-    t<'a5> ->
-    t<'a1 * 'a2 * 'a3 * 'a4 * 'a5>
+    'a1 t ->
+    'a2 t ->
+    'a3 t ->
+    'a4 t ->
+    'a5 t ->
+    ('a1 * 'a2 * 'a3 * 'a4 * 'a5) t
 
   val tuple6 :
-    t<'a1> ->
-    t<'a2> ->
-    t<'a3> ->
-    t<'a4> ->
-    t<'a5> ->
-    t<'a6> ->
-    t<'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6>
+    'a1 t ->
+    'a2 t ->
+    'a3 t ->
+    'a4 t ->
+    'a5 t ->
+    'a6 t ->
+    ('a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6) t
 
   val tuple7 :
-    t<'a1> ->
-    t<'a2> ->
-    t<'a3> ->
-    t<'a4> ->
-    t<'a5> ->
-    t<'a6> ->
-    t<'a7> ->
-    t<'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6 * 'a7>
+    'a1 t ->
+    'a2 t ->
+    'a3 t ->
+    'a4 t ->
+    'a5 t ->
+    'a6 t ->
+    'a7 t ->
+    ('a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6 * 'a7) t
 
   val tuple8 :
-    t<'a1> ->
-    t<'a2> ->
-    t<'a3> ->
-    t<'a4> ->
-    t<'a5> ->
-    t<'a6> ->
-    t<'a7> ->
-    t<'a8> ->
-    t<'a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6 * 'a7 * 'a8>
+    'a1 t ->
+    'a2 t ->
+    'a3 t ->
+    'a4 t ->
+    'a5 t ->
+    'a6 t ->
+    'a7 t ->
+    'a8 t ->
+    ('a1 * 'a2 * 'a3 * 'a4 * 'a5 * 'a6 * 'a7 * 'a8) t
+
+  (*
+  Instances to encode sum types as JSON objects. They work by testing
+  the input against each case of the sum type and encoding to the first
+  type that matches. The flaw in this method is that if the sum type has
+  two cases which have identical types, only the first case will be
+  matched.
+  *)
+
+  val sum2 :
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    'a t
+
+  val sum3 :
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    'a t
+
+  val sum4 :
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    'a t
+
+  val sum5 :
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b5 key_value) * 'b5 t ->
+    'a t
+
+  val sum6 :
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b5 key_value) * 'b5 t ->
+    ('a -> 'b6 key_value) * 'b6 t ->
+    'a t
+
+  val sum7 :
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b5 key_value) * 'b5 t ->
+    ('a -> 'b6 key_value) * 'b6 t ->
+    ('a -> 'b7 key_value) * 'b7 t ->
+    'a t
+
+  val sum8 :
+    ('a -> 'b1 key_value) * 'b1 t ->
+    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b5 key_value) * 'b5 t ->
+    ('a -> 'b6 key_value) * 'b6 t ->
+    ('a -> 'b7 key_value) * 'b7 t ->
+    ('a -> 'b8 key_value) * 'b8 t ->
+    'a t
 
   (** Operations meant to be imported directly into client code. *)
   module Ops =
@@ -146,15 +211,15 @@ module To_json =
     Returns a key-value pair of the given name and value. This is a
     helper function to make creating JSON instances easier.
     *)
-    val key : name:string -> value:'a -> key_value<'a>
+    val key : name:string -> value:'a -> 'a key_value
 
     (**
     Returns a JSON converter function from some type 'a to a string.
     *)
-    val to_json : t<'a> -> ('a -> string)
+    val to_json : 'a t -> ('a -> string)
 
     (**
     Returns a JSON converter instance for an arbitrary type 'a given a
     function that can convert an 'a value into a JSON string.
     *)
-    val make_to_json : ('a -> string) -> t<'a>
+    val make_to_json : ('a -> string) -> 'a t
