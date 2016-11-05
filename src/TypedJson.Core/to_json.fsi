@@ -1,7 +1,5 @@
 namespace TypedJson.Core
 
-open System.Collections.Generic
-
 (**
 The 'a To_json.t typeclass, instances for primitive types, and instance
 builders for arbitrary (product) data types.
@@ -15,7 +13,6 @@ module To_json =
   can be converted into JSON strings.
   *)
   type 'a t
-  type 'a key_value = (string, 'a) KeyValuePair
 
   (* JSON converter instances for primitive types. *)
 
@@ -39,61 +36,61 @@ module To_json =
   In F# terminology, these functions encode record types.
   *)
 
-  val object1 : ('a -> 'b1 key_value) * 'b1 t -> 'a t
+  val object1 : ('a -> 'b1 Key_value.t) * 'b1 t -> 'a t
   val object2 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
     'a t
 
   val object3 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
     'a t
 
   val object4 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
     'a t
 
   val object5 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
-    ('a -> 'b5 key_value) * 'b5 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
+    ('a -> 'b5 Key_value.t) * 'b5 t ->
     'a t
 
   val object6 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
-    ('a -> 'b5 key_value) * 'b5 t ->
-    ('a -> 'b6 key_value) * 'b6 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
+    ('a -> 'b5 Key_value.t) * 'b5 t ->
+    ('a -> 'b6 Key_value.t) * 'b6 t ->
     'a t
 
   val object7 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
-    ('a -> 'b5 key_value) * 'b5 t ->
-    ('a -> 'b6 key_value) * 'b6 t ->
-    ('a -> 'b7 key_value) * 'b7 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
+    ('a -> 'b5 Key_value.t) * 'b5 t ->
+    ('a -> 'b6 Key_value.t) * 'b6 t ->
+    ('a -> 'b7 Key_value.t) * 'b7 t ->
     'a t
 
   val object8 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
-    ('a -> 'b5 key_value) * 'b5 t ->
-    ('a -> 'b6 key_value) * 'b6 t ->
-    ('a -> 'b7 key_value) * 'b7 t ->
-    ('a -> 'b8 key_value) * 'b8 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
+    ('a -> 'b5 Key_value.t) * 'b5 t ->
+    ('a -> 'b6 Key_value.t) * 'b6 t ->
+    ('a -> 'b7 Key_value.t) * 'b7 t ->
+    ('a -> 'b8 Key_value.t) * 'b8 t ->
     'a t
 
   (* Instances to encode tuples as JSON heterogeneous arrays. *)
@@ -150,69 +147,63 @@ module To_json =
   *)
 
   val sum2 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
     'a t
 
   val sum3 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
     'a t
 
   val sum4 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
     'a t
 
   val sum5 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
-    ('a -> 'b5 key_value) * 'b5 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
+    ('a -> 'b5 Key_value.t) * 'b5 t ->
     'a t
 
   val sum6 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
-    ('a -> 'b5 key_value) * 'b5 t ->
-    ('a -> 'b6 key_value) * 'b6 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
+    ('a -> 'b5 Key_value.t) * 'b5 t ->
+    ('a -> 'b6 Key_value.t) * 'b6 t ->
     'a t
 
   val sum7 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
-    ('a -> 'b5 key_value) * 'b5 t ->
-    ('a -> 'b6 key_value) * 'b6 t ->
-    ('a -> 'b7 key_value) * 'b7 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
+    ('a -> 'b5 Key_value.t) * 'b5 t ->
+    ('a -> 'b6 Key_value.t) * 'b6 t ->
+    ('a -> 'b7 Key_value.t) * 'b7 t ->
     'a t
 
   val sum8 :
-    ('a -> 'b1 key_value) * 'b1 t ->
-    ('a -> 'b2 key_value) * 'b2 t ->
-    ('a -> 'b3 key_value) * 'b3 t ->
-    ('a -> 'b4 key_value) * 'b4 t ->
-    ('a -> 'b5 key_value) * 'b5 t ->
-    ('a -> 'b6 key_value) * 'b6 t ->
-    ('a -> 'b7 key_value) * 'b7 t ->
-    ('a -> 'b8 key_value) * 'b8 t ->
+    ('a -> 'b1 Key_value.t) * 'b1 t ->
+    ('a -> 'b2 Key_value.t) * 'b2 t ->
+    ('a -> 'b3 Key_value.t) * 'b3 t ->
+    ('a -> 'b4 Key_value.t) * 'b4 t ->
+    ('a -> 'b5 Key_value.t) * 'b5 t ->
+    ('a -> 'b6 Key_value.t) * 'b6 t ->
+    ('a -> 'b7 Key_value.t) * 'b7 t ->
+    ('a -> 'b8 Key_value.t) * 'b8 t ->
     'a t
 
   (** Operations meant to be imported directly into client code. *)
   module Ops =
-    (**
-    Returns a key-value pair of the given name and value. This is a
-    helper function to make creating JSON instances easier.
-    *)
-    val key : name:string -> value:'a -> 'a key_value
-
     (**
     Returns a JSON converter function from some type 'a to a string.
     *)

@@ -1,7 +1,9 @@
 namespace TypedJson.Core.Test
 
-open TypedJson.Core
 open Xunit
+
+open TypedJson.Core
+open Key_value.Ops
 open To_json.Ops
 
 module To_json_test =

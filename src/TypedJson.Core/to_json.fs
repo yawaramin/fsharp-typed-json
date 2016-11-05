@@ -6,13 +6,10 @@ open Try.Ops
 [<RequireQualifiedAccess>]
 module To_json =
   type 'a t = { apply : 'a -> string }
-  type 'a key_value = (string, 'a) KeyValuePair
 
   let commalist = String.concat ","
   let enbrace string = "{" ^ string ^ "}"
   let enbracket string = "[" ^ string ^ "]"
-  let get_key (key_value:'a key_value) = key_value.Key
-  let get_value (key_value:'a key_value) = key_value.Value
   let fail_t () = failwith "Cannot use encoder."
 
   let unit = { apply = fun () -> "{}" }
@@ -36,9 +33,11 @@ module To_json =
   @param t a JSON converter instance for the value in the key-value
   pair.
   *)
-  let key_value t : 'a key_value t =
+  let key_value t =
     { apply = fun a ->
-        (string.apply a.Key) ^ ":" ^ (t.apply a.Value) }
+        (a |> Key_value.get_key |> string.apply)
+          ^ ":"
+          ^ (a |> Key_value.get_value |> t.apply) }
 
   let object1 (f1, t1) =
     { apply = enbrace << (key_value t1).apply << f1 }
@@ -256,6 +255,5 @@ module To_json =
         t.apply a }
 
   module Ops =
-    let key (name : string) value = KeyValuePair(name, value)
     let to_json t = t.apply
     let make_to_json f = { apply = f }
