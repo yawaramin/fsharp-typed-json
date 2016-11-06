@@ -14,6 +14,12 @@ module To_json =
   *)
   type 'a t
 
+  (**
+  Returns a JSON converter instance for an arbitrary type 'a given a
+  function that can convert an 'a value into a JSON string.
+  *)
+  val make : ('a -> string) -> 'a t
+
   (* JSON converter instances for primitive types. *)
 
   val unit : unit t
@@ -208,9 +214,3 @@ module To_json =
     Returns a JSON converter function from some type 'a to a string.
     *)
     val to_json : 'a t -> ('a -> string)
-
-    (**
-    Returns a JSON converter instance for an arbitrary type 'a given a
-    function that can convert an 'a value into a JSON string.
-    *)
-    val make_to_json : ('a -> string) -> 'a t

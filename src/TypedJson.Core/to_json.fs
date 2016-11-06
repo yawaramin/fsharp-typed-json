@@ -12,6 +12,7 @@ module To_json =
   let enbracket string = "[" ^ string ^ "]"
   let fail_t () = failwith "Cannot use encoder."
 
+  let make f = { apply = f }
   let unit = { apply = fun () -> "{}" }
   let int = { apply = sprintf "%d" }
   let string = { apply = sprintf "\"%s\"" }
@@ -254,6 +255,4 @@ module To_json =
 
         t.apply a }
 
-  module Ops =
-    let to_json t = t.apply
-    let make_to_json f = { apply = f }
+  module Ops = let to_json t = t.apply
